@@ -47,8 +47,8 @@ export default function RadioInput({ field, fieldError }: RadioInputProps) {
       </div>
       <div>
         {fieldError && (
-          <Typography color="red" role="alert">
-            {getErrorMessage(fieldError)}
+          <Typography color="red" role="alert" mt="3px" mx="14px">
+            {getErrorMessage(fieldError)}fieldError
           </Typography>
         )}
       </div>
