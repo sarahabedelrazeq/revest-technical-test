@@ -17,19 +17,16 @@ function DynamicForm<T extends FieldValues>({ fields }: DynamicFormProps) {
   const methods = useForm<T>();
   const {
     handleSubmit,
-    watch,
     formState: { errors },
   } = methods;
   const onSubmit = (data: T) => console.log(data);
 
-  console.log("Watched Values:", watch(), errors);
-
   return (
     <FormProvider {...methods}>
-      <Box component="form" p={2} onSubmit={handleSubmit(onSubmit)}>
-        <Grid container spacing={2}>
+      <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+        <Grid container spacing={3}>
           {fields.map((field, index) => (
-            <Grid size={{ xs: 12, md: 6 }} key={index}>
+            <Grid size={{ xs: 12 }} key={index}>
               {field.fieldType === DynamicFormFieldType.LIST ? (
                 <AutocompleteInput
                   field={field}
@@ -48,7 +45,7 @@ function DynamicForm<T extends FieldValues>({ fields }: DynamicFormProps) {
             </Grid>
           ))}
           <Grid size={12}>
-            <Button variant="contained" type="submit">
+            <Button variant="contained" type="submit" fullWidth>
               submit
             </Button>
           </Grid>

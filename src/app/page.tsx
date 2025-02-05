@@ -1,9 +1,9 @@
-import FormRender from "@/components/FormRender";
+import Signup from "@/components/Signup";
 
 export default function Home() {
   return (
     <div>
-      <FormRender />
+      <Signup />
     </div>
   );
 }

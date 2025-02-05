@@ -1,3 +1,4 @@
+import { CssBaseline } from "@mui/material";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
@@ -24,6 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <CssBaseline enableColorScheme />
         {children}
       </body>
     </html>
