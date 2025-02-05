@@ -12,7 +12,7 @@ export default function ThemeTextField({
       variant="outlined"
       helperText={
         helperText ? (
-          <Typography color="red" role="alert">
+          <Typography component="span" color="red" role="alert">
             {helperText}
           </Typography>
         ) : (
