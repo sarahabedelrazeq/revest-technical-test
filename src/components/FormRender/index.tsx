@@ -1,48 +1,11 @@
 "use client";
 import DynamicForm from "@/components/DynamicForm";
-import {
-  DynamicFormField,
-  DynamicFormFieldType,
-} from "@/components/DynamicForm/types";
+import { DynamicFormField } from "@/components/DynamicForm/types";
+import data from "@/data/dynamic-form-signup-fields.json";
 
 export default function FormRender() {
-  const fields: DynamicFormField[] = [
-    {
-      id: 1,
-      name: "Full Name",
-      fieldType: DynamicFormFieldType.TEXT,
-      minLength: 1,
-      maxLength: 10,
-      defaultValue: "John Doe",
-      required: true,
-    },
-    {
-      id: 2,
-      name: "Email",
-      fieldType: DynamicFormFieldType.TEXT,
-      minLength: 1,
-      maxLength: 50,
-      defaultValue: "hello@mail.com",
-      required: true,
-    },
-    {
-      id: 6,
-      name: "Gender",
-      fieldType: DynamicFormFieldType.LIST,
-      defaultValue: "1",
-      required: true,
-      listOfValues1: ["Male", "Female", "Others"],
-    },
-
-    {
-      id: 7,
-      name: "Love React?",
-      fieldType: DynamicFormFieldType.RADIO,
-      defaultValue: "1",
-      required: true,
-      listOfValues1: ["Yes", "No"],
-    },
-  ];
+  const fields: DynamicFormField[] = (data as { data: DynamicFormField[] })
+    .data;
 
   return (
     <div>

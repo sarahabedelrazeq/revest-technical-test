@@ -9,6 +9,7 @@ export enum DynamicFormFieldType {
 export interface DynamicFormField {
   id: number;
   name: string;
+  label: string;
   fieldType: DynamicFormFieldType;
   minLength?: number;
   maxLength?: number;

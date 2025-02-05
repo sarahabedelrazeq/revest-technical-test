@@ -22,8 +22,8 @@ export default function Input({
       <ThemeTextField
         id={field?.name}
         helperText={fieldError ? getErrorMessage(fieldError) : ""}
-        placeholder={field.name}
-        label={field.name}
+        label={field.label}
+        placeholder={field.label}
         defaultValue={field.defaultValue}
         {...register(field?.name, {
           required: field.required,

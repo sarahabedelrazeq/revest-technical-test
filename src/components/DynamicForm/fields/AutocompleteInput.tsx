@@ -34,7 +34,7 @@ export default function AutocompleteInput({
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <Autocomplete
-            value={value}
+            value={value || null}
             onChange={(_, newValue) => {
               onChange(newValue);
             }}
@@ -46,8 +46,8 @@ export default function AutocompleteInput({
               return (
                 <ThemeTextField
                   {...params}
-                  label={field?.name}
-                  placeholder={field.name}
+                  label={field.label}
+                  placeholder={field.label}
                   error={!!fieldError}
                   helperText={fieldError ? getErrorMessage(fieldError) : ""}
                 />
