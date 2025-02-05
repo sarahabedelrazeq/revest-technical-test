@@ -30,6 +30,7 @@ export default function Input({
           minLength: field.minLength,
           maxLength: field.maxLength,
         })}
+        error={!!fieldError}
         fullWidth
       />
     </div>

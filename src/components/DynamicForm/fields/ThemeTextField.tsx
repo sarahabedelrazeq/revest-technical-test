@@ -8,7 +8,6 @@ export default function ThemeTextField({
   return (
     <TextField
       {...props}
-      className="w-100"
       variant="outlined"
       helperText={
         helperText ? (

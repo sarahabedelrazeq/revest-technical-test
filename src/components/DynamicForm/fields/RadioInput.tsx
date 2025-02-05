@@ -19,7 +19,7 @@ export default function RadioInput({ field, fieldError }: RadioInputProps) {
 
   return (
     <div>
-      <div className="mb-3">
+      <div>
         <Controller
           name={field.name}
           defaultValue={valueDefault}
@@ -28,7 +28,11 @@ export default function RadioInput({ field, fieldError }: RadioInputProps) {
             required: field.required,
           }}
           render={({ field: { onChange, value } }) => (
-            <RadioGroup value={value} onChange={onChange} row>
+            <RadioGroup
+              value={value}
+              onChange={onChange}
+              row
+            >
               {field.listOfValues1?.map((item, index) => (
                 <FormControlLabel
                   value={item}

@@ -48,7 +48,7 @@ function DynamicForm<T extends FieldValues>({ fields }: DynamicFormProps) {
             </Grid>
           ))}
           <Grid size={12}>
-            <Button variant="contained" className="text-white" type="submit">
+            <Button variant="contained" type="submit">
               submit
             </Button>
           </Grid>

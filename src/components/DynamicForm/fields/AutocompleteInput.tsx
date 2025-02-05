@@ -1,5 +1,4 @@
 import Autocomplete from "@mui/material/Autocomplete";
-import classNames from "classnames";
 import { useMemo } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { TextFieldProps, Typography } from "@mui/material";
@@ -26,7 +25,7 @@ export default function AutocompleteInput({
 
   return (
     <div>
-      <div className="mb-3">
+      <div>
         <Controller
           name={field.name}
           defaultValue={valueDefault}
@@ -44,15 +43,13 @@ export default function AutocompleteInput({
               filterSelectedOptions
               id={field.name}
               options={field?.listOfValues1 || []}
-              className={classNames("w-100", {
-                "border-danger": fieldError,
-              })}
               renderInput={(params) => {
                 return (
                   <ThemeTextField
                     {...params}
                     label={field?.name}
                     placeholder={field.name}
+                    error={!!fieldError}
                   />
                 );
               }}
