@@ -1,3 +1,5 @@
+import { FieldErrorsImpl } from "react-hook-form";
+
 export enum DynamicFormFieldType {
   TEXT = "TEXT",
   LIST = "LIST",
@@ -14,3 +16,5 @@ export interface DynamicFormField {
   required: true;
   listOfValues1?: string[];
 }
+
+export type FieldError = FieldErrorsImpl[string] | undefined

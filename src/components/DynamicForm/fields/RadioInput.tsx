@@ -1,65 +1,51 @@
-import { useEffect, useMemo } from "react";
-import { useFormContext } from "react-hook-form";
-import { DynamicFormField } from "../types";
-import { Radio, RadioGroup, FormControlLabel } from "@mui/material";
+import { useMemo } from "react";
+import { Controller, useFormContext } from "react-hook-form";
+import { DynamicFormField, FieldError } from "../types";
+import { Radio, RadioGroup, FormControlLabel, Typography } from "@mui/material";
+import getErrorMessage from "@/helpers/getErrorMessage";
 
 interface RadioInputProps {
   field: DynamicFormField;
+  fieldError?: FieldError;
 }
 
-export default function RadioInput({ field }: RadioInputProps) {
-  const {
-    getValues,
-    setValue,
-    formState: { errors },
-  } = useFormContext();
+export default function RadioInput({ field, fieldError }: RadioInputProps) {
+  const { control } = useFormContext();
 
   const valueDefault = useMemo(
     () => field.listOfValues1?.[Number(field.defaultValue) - 1 || 0],
     [field.defaultValue, field.listOfValues1]
   );
 
-  const selectedValue = useMemo(
-    () => getValues(field.name),
-    [field.name, getValues]
-  );
-
-  useEffect(() => {
-    setValue(field?.name, valueDefault);
-  }, [field, setValue, valueDefault]);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(field?.name, event.target.value);
-  };
-
   return (
     <div>
       <div className="mb-3">
-        <RadioGroup value={selectedValue} onChange={handleChange} row>
-          {field.listOfValues1?.map((item, index) => (
-            <FormControlLabel
-              value={item}
-              control={
-                <Radio
-                  sx={{
-                    color: selectedValue === item ? "green" : "blue",
-                    "&.Mui-checked": {
-                      color: selectedValue === item ? "green" : "blue",
-                    },
-                  }}
+        <Controller
+          name={field.name}
+          defaultValue={valueDefault}
+          control={control}
+          rules={{
+            required: field.required,
+          }}
+          render={({ field: { onChange, value } }) => (
+            <RadioGroup value={value} onChange={onChange} row>
+              {field.listOfValues1?.map((item, index) => (
+                <FormControlLabel
+                  value={item}
+                  control={<Radio />}
+                  label={item}
+                  key={index}
                 />
-              }
-              label={item}
-              key={index}
-            />
-          ))}
-        </RadioGroup>
+              ))}
+            </RadioGroup>
+          )}
+        />
       </div>
       <div>
-        {errors[field?.name] && (
-          <p className="text-danger" role="alert">
-            {errors && (errors[field?.name]?.message as string)}
-          </p>
+        {fieldError && (
+          <Typography color="red" role="alert">
+            {getErrorMessage(fieldError)}
+          </Typography>
         )}
       </div>
     </div>

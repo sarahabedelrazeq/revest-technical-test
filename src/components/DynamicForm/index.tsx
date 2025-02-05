@@ -21,7 +21,9 @@ function DynamicForm<T extends FieldValues>({ fields }: DynamicFormProps) {
     formState: { errors },
   } = methods;
   const onSubmit = (data: T) => console.log(data);
-  
+
+  console.log("Watched Values:", watch(), errors);
+
   return (
     <FormProvider {...methods}>
       <Box component="form" p={2} onSubmit={handleSubmit(onSubmit)}>
@@ -32,16 +34,21 @@ function DynamicForm<T extends FieldValues>({ fields }: DynamicFormProps) {
                 <AutocompleteInput
                   field={field}
                   ThemeTextField={ThemeTextField}
+                  fieldError={errors[field.name]}
                 />
               ) : field.fieldType === DynamicFormFieldType.RADIO ? (
-                <RadioInput field={field} />
+                <RadioInput field={field} fieldError={errors[field.name]} />
               ) : (
-                <Input field={field} ThemeTextField={ThemeTextField} />
+                <Input
+                  field={field}
+                  ThemeTextField={ThemeTextField}
+                  fieldError={errors[field.name]}
+                />
               )}
             </Grid>
           ))}
           <Grid size={12}>
-            <Button variant="contained" className="text-white">
+            <Button variant="contained" className="text-white" type="submit">
               submit
             </Button>
           </Grid>

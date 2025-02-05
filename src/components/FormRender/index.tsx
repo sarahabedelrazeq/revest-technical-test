@@ -12,7 +12,7 @@ export default function FormRender() {
       name: "Full Name",
       fieldType: DynamicFormFieldType.TEXT,
       minLength: 1,
-      maxLength: 100,
+      maxLength: 10,
       defaultValue: "John Doe",
       required: true,
     },

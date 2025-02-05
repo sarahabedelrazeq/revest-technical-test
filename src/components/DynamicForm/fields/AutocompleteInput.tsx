@@ -1,64 +1,70 @@
 import Autocomplete from "@mui/material/Autocomplete";
 import classNames from "classnames";
-import { useEffect, useMemo } from "react";
-import { useFormContext } from "react-hook-form";
-import { TextFieldProps } from "@mui/material";
-import { DynamicFormField } from "../types";
+import { useMemo } from "react";
+import { Controller, useFormContext } from "react-hook-form";
+import { TextFieldProps, Typography } from "@mui/material";
+import { DynamicFormField, FieldError } from "../types";
+import getErrorMessage from "@/helpers/getErrorMessage";
 
 interface AutocompleteInputProps {
   field: DynamicFormField;
   ThemeTextField: (props: TextFieldProps) => React.JSX.Element;
+  fieldError?: FieldError;
 }
 
 export default function AutocompleteInput({
   field,
   ThemeTextField,
+  fieldError,
 }: AutocompleteInputProps) {
-  const {
-    setValue,
-    formState: { errors },
-  } = useFormContext();
+  const { control } = useFormContext();
 
   const valueDefault = useMemo(
     () => field.listOfValues1?.[Number(field.defaultValue) - 1 || 0],
     [field.defaultValue, field.listOfValues1]
   );
 
-  useEffect(() => {
-    setValue(field?.name, valueDefault);
-  }, [field, setValue, valueDefault]);
-
   return (
     <div>
       <div className="mb-3">
-        <Autocomplete
-          onChange={(_, newValue) => {
-            setValue(field?.name, newValue);
-          }}
-          getOptionLabel={(option) => option}
+        <Controller
+          name={field.name}
           defaultValue={valueDefault}
-          filterSelectedOptions
-          id={field.name}
-          options={field?.listOfValues1 || []}
-          className={classNames("w-100", {
-            "border-danger": errors[field?.name],
-          })}
-          renderInput={(params) => {
-            return (
-              <ThemeTextField
-                {...params}
-                label={field?.name}
-                placeholder={field.name}
-              />
-            );
+          control={control}
+          rules={{
+            required: field.required,
           }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Autocomplete
+              value={value}
+              onChange={(_, newValue) => {
+                onChange(newValue);
+              }}
+              onBlur={onBlur}
+              filterSelectedOptions
+              id={field.name}
+              options={field?.listOfValues1 || []}
+              className={classNames("w-100", {
+                "border-danger": fieldError,
+              })}
+              renderInput={(params) => {
+                return (
+                  <ThemeTextField
+                    {...params}
+                    label={field?.name}
+                    placeholder={field.name}
+                  />
+                );
+              }}
+            />
+          )}
         />
       </div>
       <div>
-        {errors[field?.name] && (
-          <p className="text-danger" role="alert">
-            {errors && (errors[field?.name]?.message as string)}
-          </p>
+        {fieldError && (
+          <Typography color="red" role="alert">
+            {getErrorMessage(fieldError)}
+          </Typography>
         )}
       </div>
     </div>
